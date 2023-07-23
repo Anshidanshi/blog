@@ -1,0 +1,376 @@
+
+{% load static %}
+{% load humanize %}
+ 
+    <html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NewsFlash | Post</title>
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" sizes="32x32" href="./assets/images/favicon.png">
+    <!-- Remix icons -->
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
+    <!-- Swiper.js styles -->
+    
+    <link rel="stylesheet"  href="{% static '/css/blog.css' %}">
+    <!-- Custom styles -->
+  
+    <link rel="stylesheet"  href="{% static '/css/swiper-bundle.min.css' %}">
+
+   
+
+
+ 
+
+</head>
+<body>
+    <!-- Header -->
+    
+    <header class="header">
+        <nav class="navbar container" id="navbar">
+            <a href="./index.html">
+                <h2 class="logo">NewsFlash</h2>
+            </a>
+            <div class="menu" id="menu">
+                <ul class="list">
+                    <li class="list-item">
+                        <a href="#" class="list-link current">Home</a>
+                    </li>
+                    <li class="list-item">
+                        <a href="#" class="list-link">Categories</a>
+                    </li>
+                    <li class="list-item">
+                        <a href="#" class="list-link">Reviews</a>
+                    </li>
+                    <li class="list-item">
+                        <a href="#" class="list-link">News</a>
+                    </li>
+                    <li class="list-item">
+                        <a href="#" class="list-link">Membership</a>
+                    </li>
+                    <li class="list-item">
+                        <a href="#" class="list-link">Contact</a>
+                    </li>
+                    <li class="list-item screen-lg-hidden">
+                        <a href="./signin.html" class="list-link">Sign in</a>
+                    </li>
+                    <li class="list-item screen-lg-hidden">
+                        <a href="./signup.html" class="list-link">Sign up</a>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="list list-right">
+                <div class="icon-box place-items-center" id="theme-toggle-btn">
+                    <i class="ri-sun-line sun-icon"></i>
+                    <i class="ri-moon-line moon-icon"></i>
+                </div>
+
+                <div class="icon-box place-items-center" id="search-icon">
+                    <i class="ri-search-line"></i>
+                </div>
+
+                <div class="icon-box place-items-center screen-lg-hidden menu-toggle-icon" id="menu-toggle-icon">
+                    <i class="ri-menu-3-line open-menu-icon"></i>
+                    <i class="ri-close-line close-menu-icon"></i>
+                </div>
+
+                <a href="#" class="list-link screen-sm-hidden">Sign in</a>
+                <a href="#" class="btn sign-up-btn fancy-border screen-sm-hidden">
+                    <span>Sign up</span>
+                </a>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Search -->
+    <div class="search-form-container container" id="search-form-container">
+        <div class="form-container">
+            <form action="" class="form">
+                <input class="form-input" type="text" placeholder="What are you looking for?">
+                <button class="btn form-btn icon-box" type="submit">
+                    <i class="ri-search-line"></i>
+                </button>
+            </form>
+            <span class="form-note">Or press ESC to close.</span>
+        </div>
+        <div class="btn form-close-btn icon-box place-items-center" id="form-close-btn">
+            <i class="ri-close-line"></i>
+        </div>
+    </div>
+
+    <section class="blog-post section-header-offset">
+        <div class="blog-post-container container">
+            <div class="blog-post-data">
+                <h3 class="title blog-post-title">{{post.title|safe}}</h3>
+                <div class="article-data">
+                    <span>{{post.upload_time}}</span>
+                    <span class="article-data-spacer"></span>
+                    <span>4 Min read</span>
+                </div>
+                <img src="./assets/images/featured/featured-1.jpg" alt="">
+            </div>
+            {{post.created_at|naturaltime}} 
+            {{post.visitors_count}}
+           
+
+     <div id="comment-container">
+
+     </div>       
+            
+
+            
+            <div class="container">
+              
+                {{post.body|safe}}
+               
+
+                <div class="author d-grid">
+                    <div class="author-image-box">
+                        <img src="/media/{{user.profile_picture}}" alt="" class="article-image">
+                    </div>
+                    <div class="author-about">
+                        <h3 class="author-name">{{user.first_name}}</h3>
+                        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Eaque quis repellat rerum, possimus cumque dolor repellendus eligendi atque explicabo exercitationem id.</p>
+                        <ul class="list social-media">
+                            <li class="list-item">
+                                <a href="#" class="list-link"><i class="ri-instagram-line"></i></a>
+                            </li>
+                            <li class="list-item">
+                                <a href="#" class="list-link"><i class="ri-facebook-circle-line"></i></a>
+                            </li>
+                            <li class="list-item">
+                                <a href="#" class="list-link"><i class="ri-twitter-line"></i></a>
+                            </li>
+                        </ul>
+                    </div>
+                  
+                </div>
+                <h1 style="text-align: center; font-size:200%;"><u>comments</u></h1>
+                <form action="" method="post" style="margin-top: 30px;" id="comment-form">
+                    {% csrf_token %}
+                    <textarea rows="4" style="border: 1px solid #000000; border-radius: 10px; width: 100%; background-color: var(--secondary-background-color); color: aliceblue;font-size: 110%;padding: 10;" placeholder="write your comment..." name="comment" id="comment-text" name="comment"></textarea>
+                    <br>
+                    <div style="text-align: right;">
+                        <br>
+                     <input style="border: 1px rgb(5, 93, 255); background-color: rgb(5, 93, 255); width:100px ; border-radius:9px; height: 30px;" type="submit" value="Submit">
+                      </div>
+                      
+
+
+                    </form>   
+                <div class="d-grid" id="comment-containers">
+                    
+                    </div>
+                     
+            </div>
+            </div>
+
+
+
+
+    
+
+    <!-- Footer -->
+    <footer class="footer section" style="margin-top: 10;">
+        <div class="footer-container container d-grid">
+            
+            <div class="company-data">
+                <a href="./index.html">
+                    <h2 class="logo">NewsFlash</h2>
+                </a>
+                <p class="company-description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Facere, iure. Harum, animi dolores, nam, ad magni expedita.</p>
+                <ul class="list social-media">
+                    <li class="list-item">
+                        <a href="#" class="list-link"><i class="ri-instagram-line"></i></a>
+                    </li>
+                    <li class="list-item">
+                        <a href="#" class="list-link"><i class="ri-facebook-circle-line"></i></a>
+                    </li>
+                    <li class="list-item">
+                        <a href="#" class="list-link"><i class="ri-twitter-line"></i></a>
+                    </li>
+                    <li class="list-item">
+                        <a href="#" class="list-link"><i class="ri-pinterest-line"></i></a>
+                    </li>
+                </ul>
+                <span class="copyright-notice">&copy;2021 NewsFlash. All rights reserved.</span>
+            </div>
+
+            <div>
+                <h6 class="title footer-title">Categories</h6>
+                <ul class="footer-list list">
+                    <li class="list-item">
+                        <a href="#" class="list-link">Travel</a>
+                    </li>
+                    <li class="list-item">
+                        <a href="#" class="list-link">Food</a>
+                    </li>
+                    <li class="list-item">
+                        <a href="#" class="list-link">Technology</a>
+                    </li>
+                    <li class="list-item">
+                        <a href="#" class="list-link">Health</a>
+                    </li>
+                    <li class="list-item">
+                        <a href="#" class="list-link">Nature</a>
+                    </li>
+                    <li class="list-item">
+                        <a href="#" class="list-link">Fitness</a>
+                    </li>
+                </ul>
+            </div>
+
+            <div>
+                <h6 class="title footer-title">Useful links</h6>
+                <ul class="footer-list list">
+                    <li class="list-item">
+                        <a href="#" class="list-link">Home</a>
+                    </li>
+                    <li class="list-item">
+                        <a href="#" class="list-link">Elements</a>
+                    </li>
+                    <li class="list-item">
+                        <a href="#" class="list-link">Tags</a>
+                    </li>
+                    <li class="list-item">
+                        <a href="#" class="list-link">Authors</a>
+                    </li>
+                    <li class="list-item">
+                        <a href="#" class="list-link">Membership</a>
+                    </li>
+                </ul>
+            </div>
+
+            <div>
+                <h6 class="title footer-title">Company</h6>
+                <ul class="footer-list list">
+                    <li class="list-item">
+                        <a href="#" class="list-link">Contact us</a>
+                    </li>
+                    <li class="list-item">
+                        <a href="#" class="list-link">F.A.Q</a>
+                    </li>
+                    <li class="list-item">
+                        <a href="#" class="list-link">Careers</a>
+                    </li>
+                    <li class="list-item">
+                        <a href="#" class="list-link">Authors</a>
+                    </li>
+                    <li class="list-item">
+                        <a href="#" class="list-link">Memberships</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+   
+ 
+    
+<script>
+window.onload = function() {
+  loadcomment();
+  console.log("Page loaded");
+};
+
+    document.getElementById('comment-form').addEventListener('submit', function(event) {
+    event.preventDefault();  // Prevent form submission
+    var form = event.target;
+    var formData = new FormData(form);
+    var postID = '{{post.id}}';
+
+
+    fetch(postID , {
+        method: 'POST',
+        
+        body: formData
+    })
+    .then(function(response) {
+        if (response.ok) {
+            // Comment saved successfully, update comments section
+            loadcomment();
+            form.reset();
+        }
+    })
+    .catch(function(error) {
+        console.error('Error:', error);
+    });
+
+ 
+    });
+function loadcomment() {
+    var postID = '{{post.id}}';
+    var na = '{{request.user}}'
+    fetch('/post_comments/' + postID + '/')
+            
+                .then(function(response) {
+                    return response.json();
+                })
+                .then(function(data) {
+
+
+                    var commentContainer = document.getElementById('comment-containers');
+                    commentContainer.innerHTML = '';
+
+                    if (data.comments.length > 0) {
+                        for (var i = 0; i < data.comments.length; i++) {
+                            var comment = data.comments[i];
+                            var commentHTML = ' <div style="width: 100%;">'+
+                        '<div style="width: 100%; height:100%; ">'+
+                            '<div style="width:7%;float: left;">'+'<img src="https://cdn-icons-png.flaticon.com/512/3135/3135768.png" style="border-radius: 50%;" width="40">'+
+                            '</div>'+
+                          '<div style="width:83%; text-align:left;float:left;padding:10;">'+
+                            
+                        '<h4>'+comment.author.author+'</h4>'+'</div>'+
+                     
+                        
+                        '<div style="width: 10%;float: left;text-align: center;">'+
+                
+                       
+                        
+                       
+                            '<a href='+'/delete/'+comment.id+'>'+'<button type="button">'+'delete'+'</button>'+'</a>'+
+                     
+                    
+                        '</div>'+                      
+                        
+                        '</div>'+
+                        
+                        '<div style="width:100%;margin-top:10px;background: linear-gradient(to right, #33ccff 0%, #cc99ff 100%);">'+
+                            '<hr style="width:0%;">'+
+                    '</div>'+
+               '</div>'+
+                        '<div class="container" style="padding:8px; margin-top:6px;text-align: left;">'+
+                            '<h5>'+comment.content+'</h5>'+
+                            
+                            '</div>'+
+                       '<hr style="margin-bottom: 10px;">';
+
+                            commentContainer.innerHTML += commentHTML;
+                        }
+                    } else {
+                        commentContainer.innerHTML = '<p>No comments yet.</p>';
+                    }
+                })
+                .catch(function(error) {
+                    console.log('Error:', error);
+                });
+}
+</script>    
+    
+    
+    
+    
+    <!-- Swiper.js -->
+    <script src="{% static '/js/swiper-bundle.min.js' %}"></script>
+    
+
+    <!-- Custom script -->
+    <script src="{% static '/js/main.js' %}"></script>
+</body>
+</html>
+   
+</body>
+</html>
